@@ -9,7 +9,7 @@ import React, {
   ScrollView,
   StatusBar,
   StyleSheet,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
   Text
 } from 'react-native';
 
@@ -44,10 +44,15 @@ export class VantagePointList extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.onDidMount) {
+      this.props.onDidMount();
+    }
+  }
+
   render() {
     return (
       <View style={styles.page}>
-        <StatusBar />
         <ListView
           contentContainerStyle={styles.listContainer}
           dataSource={this.state.dataSource}
@@ -58,13 +63,23 @@ export class VantagePointList extends Component {
   }
 
   renderVantagePoint(vantagePoint) {
+    let imageSize = this.props.cellSize - 10;
+    let imageStyle = {
+      width: imageSize,
+      height: imageSize
+    };
+    let vantagePointStyle = {
+      margin: 5,
+      width: imageSize,
+      height: imageSize + 15
+    };
     return (
-      <TouchableHighlight onPress={() => this.props.onVantagePointPress(vantagePoint.id)}>
-        <View key={vantagePoint.id} style={styles.vantagePoint}>
-          <Image source={vantagePoint.image} style={styles.itemImage}/>
-          <Text>vantagePoint.title</Text>
+      <TouchableWithoutFeedback underlayColor="#efefef" onPress={() => this.props.onVantagePointPress(vantagePoint.id)}>
+        <View key={vantagePoint.id} style={vantagePointStyle}>
+          <Image source={vantagePoint.image} style={imageStyle}/>
+          <Text numberOfLines={1} style={styles.title}>{vantagePoint.title}</Text>
         </View>
-      </TouchableHighlight>
+      </TouchableWithoutFeedback>
     );
   }
 
@@ -75,7 +90,7 @@ const itemWidth = 150;
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    marginTop: 20
+    // marginTop: 20
   },
   container: {
     flex: 1
@@ -97,5 +112,10 @@ const styles = StyleSheet.create({
   itemImage: {
     width: itemWidth,
     height: itemWidth
+  },
+  title: {
+    color: '#555',
+    fontSize: 10,
+    paddingTop: 5
   }
 });

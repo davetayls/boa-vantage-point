@@ -1,56 +1,33 @@
 
 import {Map,List} from 'immutable';
 import * as actionTypes from '../constants/actionTypes';
+import {vantagePointData} from '../data/vantagePoints';
+import {TAB_LIST} from "../constants/tabIds";
 
-const vantagePoints = List([
-  {
-    id: 1,
-    title: 'View from ...',
-    image: require('../images/example.jpg')
-  },
-  {
-    id: 2,
-    title: 'View from ...',
-    image: require('../images/example.jpg')
-  },
-  {
-    id: 3,
-    title: 'View from ...',
-    image: require('../images/example.jpg')
-  },
-  {
-    id: 4,
-    title: 'View from ...',
-    image: require('../images/example.jpg')
-  },
-  {
-    id: 5,
-    title: 'View from ...',
-    image: require('../images/example.jpg')
-  },
-  {
-    id: 6,
-    title: 'View from ...',
-    image: require('../images/example.jpg')
-  },
-  {
-    id: 7,
-    title: 'View from ...',
-    image: require('../images/example.jpg')
-  }
-]);
+const vantagePoints = List(vantagePointData);
 
 const initialState = Map({
   vantagePoints: vantagePoints,
-  currentVantagePoint: null
+  currentVantagePoint: null,
+  mapRequested: false,
+  selectedTab: TAB_LIST
 });
 
 export function rootReducer(state = initialState, action) {
   let newState = state;
-  debugger;
   switch (action.type) {
     case actionTypes.SET_CURRENT_VANTAGE_POINT:
       newState = state.set('currentVantagePoint', action.vantagePointId);
+      newState = newState.set('mapRequested', false);
+      newState = newState.set('selectedTab', TAB_LIST);
+      break;
+    case actionTypes.SHOW_VANTAGE_POINT_MAP:
+      newState = newState.set('currentVantagePoint', action.vantagePointId);
+      newState = newState.set('mapRequested', true);
+      newState = newState.set('selectedTab', TAB_LIST);
+      break;
+    case actionTypes.HIDE_VANTAGE_POINT_MAP:
+      newState = newState.set('mapRequested', false);
       break;
   }
   console.log(newState.toJS());

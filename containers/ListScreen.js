@@ -1,24 +1,26 @@
 
+import {Dimensions} from 'react-native';
 import {connect} from 'react-redux';
 import {VantagePointList} from '../components/VantagePointList';
 import {setCurrentVantagePoint} from "../actions/vantagePoint";
 
-function mapStateToListScreenProps(state) {
+const mapStateToProps = (state) => {
   return {
     loaded: true,
+    cellSize: Dimensions.get('window').width / 2,
     vantagePoints: state.get('vantagePoints').toJS()
   }
-}
+};
 
-function mapDispatchToProps(dispatch, ownProps) {
+const mapDispatchToProps = (dispatch) => {
   return {
     onVantagePointPress: (id) => {
       dispatch(setCurrentVantagePoint(id));
     }
   }
-}
+};
 
 export const ListScreen = connect(
-  mapStateToListScreenProps,
+  mapStateToProps,
   mapDispatchToProps
 )(VantagePointList);

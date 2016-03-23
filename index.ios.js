@@ -3,24 +3,13 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-import React, {
-  AppRegistry,
-  NavigatorIOS,
-  Navigator,
-  Component,
-  StyleSheet,
-  Image,
-  Text,
-  View
-} from 'react-native';
-
-import {createStore, applyMiddleware} from 'redux';
-import {Provider} from 'react-redux';
-import thunk from 'redux-thunk';
-
-import {ListScreen} from './containers/ListScreen';
+import React, {AppRegistry, Component, NavigatorIOS} from "react-native";
+import {createStore, applyMiddleware} from "redux";
+import {Provider} from "react-redux";
+import thunk from "redux-thunk";
 import {rootReducer} from "./reducers/root";
 import {getAllVantagePoints} from "./actions/vantagePoint";
+import {AppContainer} from "./containers/App";
 
 const middleware = [thunk];
 const store = createStore(rootReducer, applyMiddleware(...middleware));
@@ -31,12 +20,7 @@ class BoAVantagePoint extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Navigator
-          inititalRoute={{ name: 'Vantage Points' }}
-          renderScene={(route, navigator) =>
-            <ListScreen />
-          }
-        />
+        <AppContainer />
       </Provider>
     );
   }

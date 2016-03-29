@@ -16,6 +16,9 @@ const initialState = Map({
 export function rootReducer(state = initialState, action) {
   let newState = state;
   switch (action.type) {
+    case actionTypes.SELECT_TAB:
+      newState = newState.set('selectedTab', action.tabId);
+      break;
     case actionTypes.SET_CURRENT_VANTAGE_POINT:
       newState = state.set('currentVantagePoint', action.vantagePointId);
       newState = newState.set('mapRequested', false);

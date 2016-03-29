@@ -24,20 +24,22 @@ export class TabNavigatorComponent extends Component {
     if (props.presses > this.state.presses) {
       this.refs.navigator.pop();
     } else {
-      let newRouteId = this.getRouteFromProps(props);
-      if (newRouteId) currentState.routeName = newRouteId;
+      this.setRouteFromProps(props, currentState);
     }
     currentState.presses = props.presses;
     this.setState(currentState);
   }
 
-  getRouteFromProps(props) {
+  setRouteFromProps(props, state) {
     if (props.currentVantagePoint) {
       if (props.mapRequested) {
-        return routeIds.MAP;
+        state.routeName = routeIds.MAP;
       } else {
-        return routeIds.VANTAGE_POINT;
+        state.routeName = routeIds.VANTAGE_POINT;
       }
+      state.currentVantagePoint = props.currentVantagePoint;
+    } else {
+      state.currentVantagePoint = null;
     }
   }
 
@@ -46,7 +48,12 @@ export class TabNavigatorComponent extends Component {
     const currentRoute = this.getCurrentNavigatorRoute();
     const nextRoute = this.getRoute();
     if (currentRoute.id !== nextRoute.id) {
-      this.refs.navigator.push(this.getRoute());
+      this.refs.navigator.push(nextRoute);
+    } else if (
+      currentRoute.id === routeIds.VANTAGE_POINT &&
+      currentRoute.passProps.vantagePointId !== nextRoute.passProps.vantagePointId
+    ) {
+      this.refs.navigator.replace(nextRoute);
     }
   }
 
@@ -76,16 +83,17 @@ export class TabNavigatorComponent extends Component {
         route.component = AllPointsScreen;
         break;
       case routeIds.VANTAGE_POINT:
-        route.title = 'Point';
+        route.title = this.props.vantagePointTitle || 'Point';
         route.component = VantagePointScreen;
         route.passProps.vantagePointId = this.props.currentVantagePoint;
         break;
       case routeIds.MAP:
-        route.title = 'Map';
+        route.title = 'Map of ' + this.props.vantagePointTitle;
         route.component = VantageMapScreen;
         route.passProps.vantagePointId = this.props.currentVantagePoint;
         break;
     }
+    console.log('get route', route);
     return route;
   }
 

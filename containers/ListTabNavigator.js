@@ -11,14 +11,18 @@ export class ListTabNavigatorComponent extends TabNavigatorComponent {
   constructor(props) {
     super(props);
     this.state.routeName = routeIds.LIST;
+    this.state.presses = 1;
   }
 
 }
 
 const mapStateToAppProps = (state) => {
+  const currentVantagePointId = state.get('currentVantagePoint');
+  const vantagePoint = currentVantagePointId ? state.get('vantagePoints').find(p => p.id === currentVantagePointId) : null;
   return {
     defaultRouteId: routeIds.LIST,
-    currentVantagePoint: state.get('currentVantagePoint'),
+    currentVantagePoint: currentVantagePointId,
+    vantagePointTitle: vantagePoint ? vantagePoint.title : '',
     mapRequested: state.get('mapRequested')
   }
 };

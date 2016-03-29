@@ -13,8 +13,8 @@ export class MapTabNavigatorComponent extends TabNavigatorComponent {
     this.state.routeName = routeIds.ALL_POINTS;
   }
 
-  getRouteFromProps(props) {
-    return routeIds.ALL_POINTS;
+  setRouteFromProps(props, state) {
+    state.routeName = routeIds.ALL_POINTS;
   }
 }
 

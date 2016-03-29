@@ -59,8 +59,8 @@ export class VantagePointComponent extends Component {
               style={styles.map}
               region={this.getRegion()}
               scrollEnabled={false}
-              showUserLocation={true}
-              followUserLocation={true}
+              showsUserLocation={true}
+              followUserLocation={false}
               annotations={this.getAnnotations()}
             />
             <Text style={styles.mapCTALabel}>View on a map &gt;</Text>

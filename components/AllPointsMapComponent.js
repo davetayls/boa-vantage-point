@@ -36,7 +36,7 @@ export class AllPointsMapComponent extends Component {
           region={this.state.region}
           scrollEnabled={true}
           showsUserLocation={true}
-          followUserLocation={true}
+          followUserLocation={false}
           annotations={this.getAnnotations()}
           onRegionChange={this.onRegionChanged.bind(this)}
         />

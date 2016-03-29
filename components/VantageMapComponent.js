@@ -37,8 +37,8 @@ export class VantageMapComponent extends Component {
           mapType="hybrid"
           region={this.getRegion()}
           scrollEnabled={true}
-          showUserLocation={true}
-          followUserLocation={true}
+          showsUserLocation={true}
+          followUserLocation={false}
           annotations={this.getAnnotations()}
         />
       </View>

@@ -18,13 +18,15 @@ export class AppComponent extends Component {
 
   tabSelected(tabId) {
     let currentState = {...this.state};
-    switch (tabId) {
-      case TAB_LIST:
-        currentState.listPresses += 1;
-        break;
-      case TAB_MAP:
-        currentState.mapPresses += 1;
-        break;
+    if (tabId === this.props.selectedTab) {
+      switch (tabId) {
+        case TAB_LIST:
+          currentState.listPresses += 1;
+          break;
+        case TAB_MAP:
+          currentState.mapPresses += 1;
+          break;
+      }
     }
     this.props.onTabSelected(tabId);
     this.setState(currentState);
